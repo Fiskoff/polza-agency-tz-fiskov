@@ -2,8 +2,8 @@ from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message
 
-from resume_handler import resume_router
-from search_handler import search_router
+from aiogram_app.handlers.resume_handler import resume_router
+from aiogram_app.handlers.search_handler import search_router
 
 
 tg_router = Router()
