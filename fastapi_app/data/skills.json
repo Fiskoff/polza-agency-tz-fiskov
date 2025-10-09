@@ -1,0 +1,22 @@
+{
+  "skills": {
+    "Python": "\\bpython\\b",
+    "JavaScript": "\\bjavascript\\b",
+    "React": "\\breact\\b",
+    "Node.js": "\\bnode\\.js\\b",
+    "SQL": "\\bsql\\b",
+    "Docker": "\\bdocker\\b",
+    "Kubernetes": "\\bkubernetes\\b",
+    "AWS": "\\baws\\b",
+    "Git": "\\bgit\\b",
+    "Linux": "\\blinux\\b",
+    "Django": "\\bdjango\\b",
+    "FastAPI": "\\bfastapi\\b",
+    "PostgreSQL": "\\bpostgre(?:sql)?\\b",
+    "MongoDB": "\\bmongodb\\b",
+    "Machine Learning": "\\bml\\b|\\bmachine learning\\b",
+    "AI": "\\bai\\b|\\bartificial intelligence\\b",
+    "DevOps": "\\bdevops\\b",
+    "CI/CD": "\\bcicd\\b|\\bci/cd\\b"
+  }
+}
