@@ -8,7 +8,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 
 from config import settings
 from fastapi_app.routers import api_router
-from aiogram_app.handlers import tg_router
+from aiogram_app.handlers.main_handlers import tg_router
 
 
 logger = logging.getLogger(__name__)
