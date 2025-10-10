@@ -17,6 +17,9 @@
     "Machine Learning": "\\bml\\b|\\bmachine learning\\b",
     "AI": "\\bai\\b|\\bartificial intelligence\\b",
     "DevOps": "\\bdevops\\b",
-    "CI/CD": "\\bcicd\\b|\\bci/cd\\b"
+    "CI/CD": "\\bcicd\\b|\\bci/cd\\b",
+    "Numpy": "\\bnumpy\\b",
+    "Keras": "\\bkeras\\b",
+    "SQLite": "\\bsqlite\\b"
   }
 }
