@@ -12,4 +12,5 @@ tg_router.include_router(search_router)
 
 @tg_router.message(Command("start"))
 async def cmd_start(message: Message):
+    """Обработчик команды /start. Вернёт список команд"""
     await message.answer("Команды:\n/resume - для загрузки резюме\n/search - поиска вакансий")
