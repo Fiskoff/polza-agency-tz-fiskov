@@ -1,27 +1,53 @@
-import os
-import tempfile
+from fastapi import APIRouter, UploadFile, File, Body
 
-from fastapi import APIRouter, UploadFile, File, HTTPException
-
-from fastapi_app.schemas import ResumeResponse
+from fastapi_app.schemas import SkillsResponse
 from fastapi_app.services import ApiServices
 
 
-api_router = APIRouter()
+api_router: APIRouter = APIRouter(prefix="/skills", tags=["Навыки"])
 
-@api_router.post("/analyze", response_model=ResumeResponse)
-async def analyze_resume(file: UploadFile = File(...)):
-    if file.content_type not in ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]:
-        raise HTTPException(status_code=400, detail="Файл должен быть PDF или DOCX")
+@api_router.post(
+    "/extract",
+    response_model=SkillsResponse,
+    summary="Извлечение навыков из текста",
+    description="""Принимает текст резюме или описания и извлекает из него список навыков.
+    Текст должен быть передан в формате JSON в поле `text`.""",
+    responses={
+        200: {
+            "description": "Список найденных навыков",
+            "content": {
+                "application/json": {
+                    "example": {"skills": ["Python", "FastAPI", "PostgreSQL"]}
+                }
+            }
+        },
+        422: {"description": "Некорректный формат JSON"},
+        500: {"description": "Внутренняя ошибка сервера"}
+    }
+)
+async def extract_skills_from_text(text: str = Body(embed=True)):
+    return ApiServices.analyze_text_for_skills(text)
 
-    with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(file.filename)[1]) as temp_file:
-        content = await file.read()
-        temp_file.write(content)
-        temp_path = temp_file.name
 
-    try:
-        text = ApiServices.extract_text_from_file(temp_path)
-        found_skills = ApiServices.extract_skills_from_text(text)
-        return ResumeResponse(skills=list(found_skills))
-    finally:
-        os.remove(temp_path)
+@api_router.post(
+    "/extract-from-file",
+    response_model=SkillsResponse,
+    summary="Извлечение навыков из файла",
+    description="""Принимает файл (PDF или DOCX) с резюме и извлекает из него список навыков.
+    Поддерживаются форматы: `.pdf`, `.docx`.""",
+    responses={
+        200: {
+            "description": "Список найденных навыков из файла",
+            "content": {
+                "application/json": {
+                    "example": {"skills": ["Python", "FastAPI", "SQLAlchemy"]}
+                }
+            }
+        },
+        400: {"description": "Файл не поддерживается или повреждён"},
+        413: {"description": "Файл слишком большой"},
+        500: {"description": "Внутренняя ошибка сервера"}
+    }
+)
+async def extract_skills_from_file(file: UploadFile = File()) -> SkillsResponse:
+    return await ApiServices.process_uploaded_file(file)

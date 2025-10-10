@@ -1,6 +1,9 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List
 
 
-class ResumeResponse(BaseModel):
-    skills: List[str]
+class SkillsResponse(BaseModel):
+    skills: List[str] = Field(
+        description="Список найденных навыков",
+        examples=[["Python", "FastAPI", "Docker"]]
+    )
